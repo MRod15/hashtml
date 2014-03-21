@@ -115,7 +115,3 @@ That's not a problem! Just identify the node by it's attributes!
                              </div>
                            </body></html></document>
 
-## TODO
-
-1- Drop the *.document* entry on element access.
-2- Improve node modification when using attributes to identify the target node.
