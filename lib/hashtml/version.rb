@@ -1,3 +1,3 @@
-module HashTML
+class HashTML
   VERSION = '1.0.0'
 end
