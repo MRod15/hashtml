@@ -5,6 +5,6 @@ class Hash
   #@param hash [Hash] pairs to verify
   #@return [Boolean]
   def include_pairs?(hash)
-    hash.select { |k, v| k if self[k] != v }.empty?
+    hash.select { |k, v| self[k] != v }.empty?
   end
 end
