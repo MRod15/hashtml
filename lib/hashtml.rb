@@ -12,8 +12,7 @@ class HashTML
   # Returns a HashTML object corresponding to the data structure of the given HTML,
   # which should be a Nokogiri::HTML::Document or anything that responds to to_s
   # with a string of valid HTML.
-  #@param html [Nokogiri::HTML::Document], or
-  #@param html [String] document to parse
+  #@param html [Nokogiri::HTML::Document|String], or document to parse
   #@return [Hash]
   def initialize(html)
     doc        = (html.is_a?(Nokogiri::HTML::Document) ? html : Nokogiri::HTML(html.to_s))
@@ -35,7 +34,7 @@ class HashTML
     method           = method.to_s
     attributes, _nil = args
     attributes       ||= {}
-    if method.end_with?("?")
+    if method.end_with?('?')
       key = method[0..-2]
       _check_for_presence(key, attributes)
     else
@@ -97,6 +96,7 @@ class HashTML
 
     def initialize(node=nil)
       return unless node
+      node        = node.children.first if node.is_a?(Nokogiri::HTML::Document)
       @name       = node.name
       @attributes = node.respond_to?(:attributes) ? get_html_node_attributes(node) : {}
       @children   = get_html_node_children(node)
@@ -117,10 +117,10 @@ class HashTML
       method                      = method.to_s
       attributes, new_value, _nil = args
       attributes                  ||= {}
-      if method.end_with?("?")
+      if method.end_with?('?')
         key = method[0..-2]
         _check_for_presence(key, attributes)
-      elsif method.end_with?("=")
+      elsif method.end_with?('=')
         key                   = method[0..-2]
         new_value, attributes = attributes, {} if new_value.nil?
         _change_value(key, attributes, new_value)
