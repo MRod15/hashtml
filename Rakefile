@@ -22,6 +22,14 @@ namespace :hashtml do
     load_dependencies(task)
   end
 
+  task :run_by_tag, :tag do |rtask, params|
+    Cucumber::Rake::Task.new('run_tests_by_tag', 'run hashtml tests by tag') do |task|
+      load_dependencies(task)
+      task.cucumber_opts = "-t #{params[:tag]}"
+    end.runner.run
+  end
+
+
   YARD::Rake::YardocTask.new do |t|
     t.files   = %w[lib/**/*.rb features/**/*.feature features/**/*.rb - README.md]
     t.options = %w(-M kramdown)

@@ -1,8 +1,8 @@
 Feature: test hash include_pairs?
 
   Scenario Outline: Verifying hash subsets
-    Given I have the hash "<hash>"
-    When I verify the given hash includes the pairs "<new_hash>"
+    Given a hash "<hash>"
+    When is verified if the given hash includes the pairs from "<new_hash>"
     Then the hash search result should be <result>
 
   Examples:
