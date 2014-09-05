@@ -15,7 +15,7 @@ class HashTML
   #@param html [Nokogiri::HTML::Document|String], or document to parse
   #@return [Hash]
   def initialize(html)
-    doc        = (html.is_a?(Nokogiri::HTML::Document) ? html : Nokogiri::HTML(html.to_s))
+    doc        = (html.is_a?(Nokogiri::HTML::Document) ? html : Nokogiri::HTML(html))
     @root_node = HashTML::Node.new(doc)
   end
 
@@ -96,7 +96,15 @@ class HashTML
 
     def initialize(node=nil)
       return unless node
-      node        = node.children.first if node.is_a?(Nokogiri::HTML::Document)
+      node        = catch(:node) do
+        if node.is_a?(Nokogiri::HTML::Document)
+          node = node.children.each do |child|
+            throw(:node, child) if not child.is_a?(Nokogiri::XML::DTD)
+          end
+        else
+          throw(:node, node)
+        end
+      end
       @name       = node.name
       @attributes = node.respond_to?(:attributes) ? get_html_node_attributes(node) : {}
       @children   = get_html_node_children(node)
