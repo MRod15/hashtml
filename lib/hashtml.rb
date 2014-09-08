@@ -99,7 +99,7 @@ class HashTML
       node        = catch(:node) do
         if node.is_a?(Nokogiri::HTML::Document)
           node = node.children.each do |child|
-            throw(:node, child) if not child.is_a?(Nokogiri::XML::DTD)
+            throw(:node, child) unless child.is_a?(Nokogiri::XML::DTD)
           end
         else
           throw(:node, node)
@@ -144,15 +144,16 @@ class HashTML
     end
 
     def _get_value(key, attributes={})
-      if key == 'text'
-        return @children.map { |child| child.text if child.is_a?(HashTML::Text) }.reject(&:nil?).join
-      else
-        @children.each do |child|
-          next if child.is_a?(HashTML::Text)
-          return child if (child.name == key and child.attributes.include_pairs?(attributes))
+      catch(:value) do
+        if key == 'text'
+          throw(:value, @children.map { |child| child.text if child.is_a?(HashTML::Text) }.reject(&:nil?).join)
+        else
+          @children.each do |child|
+            next if child.is_a?(HashTML::Text)
+            throw(:value, child) if child.name == key and child.attributes.include_pairs?(attributes)
+          end
         end
       end
-      nil
     end
 
     def _change_value(key, attributes, new_value)
