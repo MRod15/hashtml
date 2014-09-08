@@ -1,22 +1,8 @@
 Feature: HashTML manipulation tests for an input string
 
   Background:
-    Given a html string like
-    """
-    <html>
-      <body>
-        <div class="main">
-          <span id="s1" style="color: blue">
-            <h1>hello world!</h1>
-          </span>
-          <span id="s2" style="color: green">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </span>
-        </div>
-      </body>
-    </html>
-    """
-    When a HashTML object is initialized with the given string
+    Given a html file named "test.html"
+    When a HashTML object is initialized with the given file content
 
 
   Scenario: HashTML object initialization from string
@@ -60,7 +46,7 @@ Feature: HashTML manipulation tests for an input string
     And the HashTML node "html.body.div.span.h1" text is accessed
     Then the HashTML node has text "edited text"
 
-
+  @debug
   Scenario Outline: HashTML node attribute is changed
     And the HashTML node "<node_path>" attribute "<attribute>" is accessed
     And the HashTML node attribute value is "<old_value>"

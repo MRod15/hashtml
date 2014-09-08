@@ -17,25 +17,25 @@ Given(/^a html string like$/) do |text|
   HTML
 end
 
-When(/^a Hashtml object is initialized with the given string$/) do
+When(/^a HashTML object is initialized with the given string$/) do
   @hashtml = HashTML.new(@html_string)
 end
 
-Then(/^a Hashtml object should be obtained$/) do
+Then(/^a HashTML object should be obtained$/) do
   @hashtml.is_a?(HashTML)
 end
 
-Then(/^the Hashtml object root element should have the name "([^"]*)"$/) do |name|
+Then(/^the HashTML object root element should have the name "([^"]*)"$/) do |name|
   assert_equal(name, @hashtml.root_node.name)
 end
 
-And(/^the Hashtml object root element should have no attributes$/) do
+And(/^the HashTML object root element should have no attributes$/) do
   assert(@hashtml.root_node.attributes.empty?)
 end
 
-When(/^the Hashtml node "([^"]*)" is accessed$/) do |node_path|
+When(/^the HashTML node "([^"]*)" is accessed$/) do |node_path|
   iterations = node_path.split('.')
-  object     = @hashtml
+  object     = @hashtml.clone
   iterations.each do |iteration|
     iteration, args = $1, $2 if iteration.match(/(\w+)\(([^\)]+)\)/)
     if args
@@ -48,15 +48,52 @@ When(/^the Hashtml node "([^"]*)" is accessed$/) do |node_path|
   @node = object
 end
 
-Then(/^the Hashtml node has name "([^"]*)"$/) do |name|
+Then(/^the HashTML node has name "([^"]*)"$/) do |name|
   assert_equal(name, @node.name)
 end
 
-And(/^the Hashtml node has attributes "([^"]*)"$/) do |attributes|
+And(/^the HashTML node has attributes "([^"]*)"$/) do |attributes|
   attributes =if attributes.eql?('')
                 {}
               else
                 eval(attributes)
               end
   assert_equal(attributes, @node.attributes)
+end
+
+And(/^the HashTML node "([^"]*)" text is accessed$/) do |node_path|
+  object = step("the HashTML node \"#{node_path}\" is accessed")
+  @text  = object.text
+end
+
+Then(/^the HashTML node has text "([^"]*)"$/) do |text|
+  assert_equal(text, @text)
+end
+
+And(/^the HashTML node text "([^"]*)" is changed to "([^"]*)"$/) do |node_path, value|
+  object      = step("the HashTML node \"#{node_path}\" is accessed")
+  object.text = value
+end
+
+And(/^the HashTML node "([^"]*)" attribute "([^"]*)" is accessed$/) do |node_path, attribute|
+  object           = step("the HashTML node \"#{node_path}\" is accessed")
+  @attribute_value = object.attributes[attribute]
+end
+
+And(/^the HashTML node attribute value is "([^"]*)"$/) do |value|
+  assert_equal(value, @attribute_value)
+end
+
+When(/^the HashTML node "([^"]*)" attribute "([^"]*)" is changed to "([^"]*)"$/) do |node_path, attribute, value|
+  object                       = step("the HashTML node \"#{node_path}\" is accessed")
+  object.attributes[attribute] = value
+end
+
+Given(/^a html file named "([^"]*)"$/) do |filename|
+  @file = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', filename))
+end
+
+When(/^a HashTML object is initialized with the given file content$/) do
+  html     = Nokogiri::HTML(File.read(@file))
+  @hashtml = HashTML.new(html)
 end
