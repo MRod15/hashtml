@@ -1,4 +1,4 @@
-hashtml
+hashtml [ ![Codeship Status for MRod15/hashtml](https://codeship.io/projects/6dd49080-19a4-0132-515f-0a39251edeca/status)](https://codeship.io/projects/34440)
 =======
 
 HashTML is a gem for parsing HTML documents to Ruby Hash-like objects
