@@ -1,8 +1,9 @@
-Given /^a hash "([^"]*)"$/ do |wannabe|
+# -*- encoding : utf-8 -*-
+Given(/^a hash "([^"]*)"$/) do |wannabe|
   @hash = eval(wannabe)
 end
 
-When /^is verified if the given hash includes the pairs from "([^"]*)"$/ do |new_wannabe|
+When(/^is verified if the given hash includes the pairs from "([^"]*)"$/) do |new_wannabe|
   new_hash = eval(new_wannabe)
   @result  = @hash.include_pairs?(new_hash)
 end
@@ -53,11 +54,7 @@ Then(/^the HashTML node has name "([^"]*)"$/) do |name|
 end
 
 And(/^the HashTML node has attributes "([^"]*)"$/) do |attributes|
-  attributes =if attributes.eql?('')
-                {}
-              else
-                eval(attributes)
-              end
+  attributes = attributes.eql?('') ? {} : eval(attributes)
   assert_equal(attributes, @node.attributes)
 end
 

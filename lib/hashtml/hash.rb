@@ -1,6 +1,5 @@
-
+# -*- encoding : utf-8 -*-
 class Hash
-
   # Checks if an 'hash' is a subset of the object
   #@param hash [Hash] pairs to verify
   #@return [Boolean]
