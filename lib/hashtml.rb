@@ -12,8 +12,8 @@ class HashTML
   # Returns a HashTML object corresponding to the data structure of the given HTML,
   # which should be a Nokogiri::HTML::Document or anything that responds to to_s
   # with a string of valid HTML.
-  #@param html [Nokogiri::HTML::Document|String], or document to parse
-  #@return [HashTML]
+  # @param html [Nokogiri::HTML::Document|String], or document to parse
+  # @return [HashTML]
   def initialize(html)
     doc        = (html.is_a?(Nokogiri::HTML::Document) ? html : Nokogiri::HTML(html))
     @root_node = HashTML::Node.new(doc)
@@ -21,21 +21,21 @@ class HashTML
 
 
   # Returns an HTML string corresponding to the data structure of the given Hash.
-  #@return [String]
+  # @return [String]
   def to_html
     @root_node.to_html
   end
 
   # Converts the HashTML object to a hash
-  #@return [Hash]
+  # @return [Hash]
   def to_h
     @root_node.to_h
   end
 
   # Accessor methods
-  #@param method [String] accessor
-  #@param args [Array] arguments
-  #@return [Object]
+  # @param method [String] accessor
+  # @param args [Array] arguments
+  # @return [Object]
   def method_missing(method, *args)
     method           = method.to_s
     attributes, _nil = args
@@ -50,17 +50,17 @@ class HashTML
 
   private
   # Validates the presence of an attribute
-  #@param key [String] attribute name
-  #@param attributes [Hash] attribute attributes
-  #@return [Boolean]
+  # @param key [String] attribute name
+  # @param attributes [Hash] attribute attributes
+  # @return [Boolean]
   def _check_for_presence(key, attributes={})
     !!_get_value(key, attributes)
   end
 
   # Returns the value of node path
-  #@param key [String] attribute name
-  #@param attributes [Hash] attribute attributes
-  #@return [Object]
+  # @param key [String] attribute name
+  # @param attributes [Hash] attribute attributes
+  # @return [Object]
   def _get_value(key, attributes={})
     return nil unless @root_node.name == key
     return @root_node unless attributes
@@ -71,23 +71,23 @@ class HashTML
 
   class << self
     # Converts a Hash to a HashTML object
-    #@param hash [Hash]
-    #@return [HashTML]
+    # @param hash [Hash]
+    # @return [HashTML]
     def to_hashtml(hash)
       convert_to_hashtml(hash)
     end
 
     # Converts a Hash to HTML
-    #@param hash [Hash]
-    #@return [String] HTML document
+    # @param hash [Hash]
+    # @return [String] HTML document
     def to_html(hash)
       convert_to_hashtml(hash).to_html
     end
 
     private
     # Converts a Hash to a HashTML object
-    #@param hash [Hash]
-    #@return [HashTML]
+    # @param hash [Hash]
+    # @return [HashTML]
     def convert_to_hashtml(hash)
       hashtml = nil
       hash.each do |key, value|
@@ -106,8 +106,8 @@ class HashTML
     attr_accessor :name, :attributes, :children
 
     # Creates a new HasHTML::Node
-    #@param node [Nokogiri::XML::Node]
-    #@return [HasHTML::Node]
+    # @param node [Nokogiri::XML::Node]
+    # @return [HasHTML::Node]
     def initialize(node=nil)
       return unless node
       node        = catch(:node) do
@@ -125,13 +125,13 @@ class HashTML
     end
 
     # Converts the node to Hash
-    #@return [Hash]
+    # @return [Hash]
     def to_h
       { @name => { children: @children.map { |child| child.to_h }, attributes: @attributes } }
     end
 
     # Converts the node to HTML
-    #@return [String]
+    # @return [String]
     def to_html
       space          = (@attributes.any? ? ' ' : '')
       children_html  = @children.map { |child| child.to_html }.join
@@ -140,9 +140,9 @@ class HashTML
     end
 
     # Accessor methods
-    #@param method [String] accessor
-    #@param args [Array] arguments
-    #@return [HasHTML::Node]
+    # @param method [String] accessor
+    # @param args [Array] arguments
+    # @return [HasHTML::Node]
     def method_missing(method, *args)
       method                      = method.to_s
       attributes, new_value, _nil = args
@@ -161,17 +161,17 @@ class HashTML
 
     private
     # Validates the presence of an attribute
-    #@param key [String] attribute name
-    #@param attributes [Hash] attribute attributes
-    #@return [Boolean]
+    # @param key [String] attribute name
+    # @param attributes [Hash] attribute attributes
+    # @return [Boolean]
     def _check_for_presence(key, attributes={})
       !!_get_value(key, attributes)
     end
 
     # Returns the value of node path
-    #@param key [String] attribute name
-    #@param attributes [Hash] attribute attributes
-    #@return [Object]
+    # @param key [String] attribute name
+    # @param attributes [Hash] attribute attributes
+    # @return [Object]
     def _get_value(key, attributes={})
       if key.eql?('text')
         @children.select { |child| child.is_a?(HashTML::Text) }.map(&:text).join
@@ -186,10 +186,10 @@ class HashTML
     end
 
     # Changes the value of a node
-    #@param key [String] attribute name
-    #@param attributes [Hash] attribute attributes
-    #@param new_value [Object] node new value
-    #@return [Boolean]
+    # @param key [String] attribute name
+    # @param attributes [Hash] attribute attributes
+    # @param new_value [Object] node new value
+    # @return [Boolean]
     def _change_value(key, attributes, new_value)
       if key.eql?('text')
         new_children = @children.select { |child| !child.is_a?(HashTML::Text) }
@@ -203,7 +203,7 @@ class HashTML
     end
 
     # Fetches the HTML node children
-    #@param node [Nokogiri::HTML::Node]
+    # @param node [Nokogiri::HTML::Node]
     def get_html_node_children(node)
       node.children.map do |child|
         case child.class.to_s
@@ -218,7 +218,7 @@ class HashTML
     end
 
     # Fetches the node attributes
-    #@param node [Nokogiri::HTML::Node]
+    # @param node [Nokogiri::HTML::Node]
     def get_html_node_attributes(node)
       Hash[node.attributes.map { |name, value| [name, value.value] }]
     end
@@ -235,13 +235,13 @@ class HashTML
     end
 
     # Converts the node to Hash
-    #@return [Hash]
+    # @return [Hash]
     def to_h
       { text: @text }
     end
 
     # Converts the node to HTML
-    #@return [String]
+    # @return [String]
     def to_html
       @text
     end
