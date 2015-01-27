@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.license       = 'MIT'
   gem.has_rdoc      = 'yard'
 
-  gem.add_runtime_dependency 'nokogiri', '>= 1.5.5'
+  gem.add_runtime_dependency 'nokogiri', '~> 1.5'
 
   gem.add_development_dependency('cucumber', '~> 1.3')
   gem.add_development_dependency('rake', '~> 10.1')
