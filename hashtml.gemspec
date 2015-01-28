@@ -1,5 +1,3 @@
-require 'hashtml/version'
-
 Gem::Specification.new do |gem|
   gem.authors     = ['Mauro Rodrigues']
   gem.email       = ['maurorodrigues15@gmail.com']
@@ -10,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files`.split("\n")
   gem.name          = 'hashtml'
   gem.require_paths = ['lib']
-  gem.version       = HashTML::VERSION
+  gem.version       = '0.0.2'
   gem.license       = 'MIT'
 
   gem.add_runtime_dependency('nokogiri', '~> 1.5')
