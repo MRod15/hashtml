@@ -1,8 +1,6 @@
 # encoding: utf-8
 require 'yard'
 require 'rake/testtask'
-require 'cucumber'
-require 'cucumber/rake/task'
 task :default => 'hashtml:yard'
 
 namespace :hashtml do
