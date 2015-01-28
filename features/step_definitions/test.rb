@@ -35,18 +35,7 @@ And(/^the HashTML object root element should have no attributes$/) do
 end
 
 When(/^the HashTML node "([^"]*)" is accessed$/) do |node_path|
-  iterations = node_path.split('.')
-  object     = @hashtml.clone
-  iterations.each do |iteration|
-    iteration, args = $1, $2 if iteration.match(/(\w+)\(([^\)]+)\)/)
-    if args
-      args   = eval(args)
-      object = object.send(iteration.to_sym, args)
-    else
-      object = object.send(iteration.to_sym)
-    end
-  end
-  @node = object
+  @node = eval("@hashtml.#{node_path}")
 end
 
 Then(/^the HashTML node has name "([^"]*)"$/) do |name|
