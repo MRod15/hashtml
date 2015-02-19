@@ -1,4 +1,4 @@
-hashtml [ ![Codeship Status for MRod15/hashtml](https://codeship.io/projects/6dd49080-19a4-0132-515f-0a39251edeca/status)](https://codeship.io/projects/34440) [![Build Status](https://travis-ci.org/MRod15/hashtml.svg?branch=master)](https://travis-ci.org/MRod15/hashtml)
+hashtml [ ![Codeship Status for MRod15/hashtml](https://codeship.io/projects/6dd49080-19a4-0132-515f-0a39251edeca/status)](https://codeship.io/projects/34440) [![Build Status](https://travis-ci.org/MRod15/hashtml.svg?branch=master)](https://travis-ci.org/MRod15/hashtml) [![Code Climate](https://codeclimate.com/github/MRod15/hashtml/badges/gpa.svg)](https://codeclimate.com/github/MRod15/hashtml) [![PullReview stats](https://www.pullreview.com/github/MRod15/hashtml/badges/master.svg?)](https://www.pullreview.com/github/MRod15/hashtml/reviews/master) [![Dependency Status](https://gemnasium.com/MRod15/hashtml.svg)](https://gemnasium.com/MRod15/hashtml)
 =======
 
 HashTML is a gem for parsing HTML documents to Ruby Hash-like objects
