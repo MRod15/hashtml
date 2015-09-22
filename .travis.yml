@@ -7,3 +7,6 @@ rvm:
   - jruby-19mode
   - ruby-head
   - jruby-head
+addons:
+    code_climate:
+        repo_token: 5f55de134fe708d10b1252e28215dc497a7dc4a5870ddd9f519bd34d4bfdd6a7
